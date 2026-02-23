@@ -1162,7 +1162,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
                 'Content-Type' => 'application/json',
             ],
             'query' => [
-                'key' => $api_key_albertina,
+                'key' => $api_key,
             ],
             'json' => [
                 "contents" => [
@@ -1309,7 +1309,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
                 'Content-Type' => 'application/json',
             ],
             'query' => [
-                'key' => $api_key_albertina,
+                'key' => $api_key,
             ],
             'json' => [
                 "contents" => [
@@ -1382,7 +1382,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
                 'Content-Type' => 'application/json',
             ],
             'query' => [
-                'key' => $api_key_albertina,
+                'key' => $api_key,
             ],
             'json' => [
                 "contents" => [
@@ -1457,7 +1457,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
                 'Content-Type' => 'application/json',
             ],
             'query' => [
-                'key' => $api_key_albertina,
+                'key' => $api_key,
             ],
             'json' => [
                 "contents" => [
@@ -1527,7 +1527,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
                 'Content-Type' => 'application/json',
             ],
             'query' => [
-                'key' => $api_key_albertina,
+                'key' => $api_key,
             ],
             'json' => [
                 "contents" => [
