@@ -1153,7 +1153,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
 
         $api_key = env('GOOGLE_API_KEY_1');
         $api_key_rosa = env('GOOGLE_API_KEY_ROSA'); $api_key_albertina = env('GOOGLE_API_KEY_ALBERTINA');
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
 
         $client = new Client();
 
@@ -1225,7 +1225,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
 
         $api_key = env('GOOGLE_API_KEY_1');
         $api_key_rosa = env('GOOGLE_API_KEY_ROSA'); $api_key_albertina = env('GOOGLE_API_KEY_ALBERTINA'); $api_key_simao = env('GOOGLE_API_KEY_SIMAO');
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
 
         $client = new Client();
 
@@ -1300,7 +1300,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
 
         $api_key = env('GOOGLE_API_KEY_1');
         $api_key_rosa = env('GOOGLE_API_KEY_ROSA'); $api_key_albertina = env('GOOGLE_API_KEY_ALBERTINA');
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
 
         $client = new Client();
 
@@ -1373,7 +1373,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
 
         $api_key = env('GOOGLE_API_KEY_1');
         $api_key_rosa = env('GOOGLE_API_KEY_ROSA'); $api_key_albertina = env('GOOGLE_API_KEY_ALBERTINA');
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
 
         $client = new Client();
 
@@ -1448,7 +1448,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
 
         $api_key = env('GOOGLE_API_KEY_1');
         $api_key_rosa = env('GOOGLE_API_KEY_ROSA'); $api_key_albertina = env('GOOGLE_API_KEY_ALBERTINA');
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
 
         $client = new Client();
 
@@ -1518,7 +1518,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
 
         $api_key = env('GOOGLE_API_KEY_1');
         $api_key_rosa = env('GOOGLE_API_KEY_ROSA'); $api_key_albertina = env('GOOGLE_API_KEY_ALBERTINA');
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
 
         $client = new Client();
 
