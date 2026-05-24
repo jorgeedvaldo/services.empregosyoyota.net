@@ -341,8 +341,8 @@ class LinkController extends Controller
                 // Parâmetros da solicitação POST
                 $params = [
                     'form_params' => [
-                        'message' => $newRecord->title . "\n.\nSe você deseja saber mais sobre a oportunidade clique no link: https://moz.empregosyoyota.net/empregos/" . $newRecord->slug . "\n.",
-                        'link' => 'https://moz.empregosyoyota.net/empregos/' . $newRecord->slug,
+                        'message' => $newRecord->title . "\n.\nSe você deseja saber mais sobre a oportunidade clique no link: https://empregosyoyota.net/empregos/" . $newRecord->slug . "\n.",
+                        'link' => 'https://empregosyoyota.net/empregos/' . $newRecord->slug,
                         'access_token' => env('FACEBOOK_ACCESS_TOKEN_1'),
                     ],
                 ];
