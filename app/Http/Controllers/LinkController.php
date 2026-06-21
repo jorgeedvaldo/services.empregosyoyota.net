@@ -511,7 +511,7 @@ class LinkController extends Controller
             ]);
 
             //Tratar Texto do Post para Facebook e Linkedin
-            $PostTratado = $newRecord->title . "\n.\n" . $ListaParaFacebook . "\n.\nSe você deseja saber mais clique no link: https://ao.empregosyoyota.net/articles/" . $newRecord->slug . "\n.";
+            $PostTratado = $newRecord->title . "\n.\n" . $ListaParaFacebook . "\n.\nSe você deseja saber mais clique no link: https://empregosyoyota.net/articles/" . $newRecord->slug . "\n.";
             
             //*********************Postar no Facebook*****************************************
             //Inicia novo Client
@@ -522,7 +522,7 @@ class LinkController extends Controller
             $params = [
                 'form_params' => [
                     'message' => $PostTratado,
-                    'link' => 'https://ao.empregosyoyota.net/articles/' . $newRecord->slug,
+                    'link' => 'https://empregosyoyota.net/articles/' . $newRecord->slug,
                     'access_token' => env('FACEBOOK_ACCESS_TOKEN_2'),
                 ],
             ];
@@ -531,8 +531,8 @@ class LinkController extends Controller
             //*********************************************************************************** */
             
              /*AGORA VAMOS POSTAR NO LINKEDIN*/
-        	$link = "https://ao.empregosyoyota.net/articles/" . $newRecord->slug;
-        	$linkImage = "https://ao.empregosyoyota.net/storage/" . $newRecord->photo;
+        	$link = "https://empregosyoyota.net/articles/" . $newRecord->slug;
+        	$linkImage = "https://empregosyoyota.net/storage/" . $newRecord->photo;
         	$this->PublicarLinkedIn2($PostTratado, $link, $linkImage);
         	
         	//*******************************
