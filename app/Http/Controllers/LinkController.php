@@ -274,7 +274,7 @@ class LinkController extends Controller
                             $newRecord = Link::create([
                                 'url' => $result,
 								'country_id' => 3
-                            ]);		
+                            ]);
                         }
                     }
                 }
@@ -332,7 +332,7 @@ class LinkController extends Controller
                     'photo' => 'images/jobs/default.jpg', // Caminho da imagem armazenado no banco de dados
                     'country_id' => 3,
                 ]);
-				
+
 				//*********************Postar no Facebook*****************************************
                 //Inicia novo Client
                 $clientParaApi = new Client();
@@ -349,7 +349,7 @@ class LinkController extends Controller
                 // Realize a solicitação POST
                 $response = $clientParaApi->post($apiUrl, $params);
                 //*********************************************************************************** */
-				
+
             } catch (\Throwable $th) {
                 //throw $th;
             }
@@ -362,13 +362,13 @@ class LinkController extends Controller
 
         return response()->json(['record' => $jobLinks]);
     }
-	
-	
-	
+
+
+
 	//**************************** PARA ANGOLA
-	
-	
-	
+
+
+
 	//Insere dados no Drafts de Angola
 	public function insertJobsAngola(){
         // Crie uma instância do cliente Guzzle
@@ -457,11 +457,11 @@ class LinkController extends Controller
                 'photo' => $draft->photo,
                 'country_id' => $draft->country_id,
             ]);
-			
+
 			$draft->delete();
         }
     }
-	
+
 	public function PublicarVagasDoDia()
     {
         $EmpregosHoje = Job::whereDate('created_at', Carbon::now())->where('country_id','=',1)->get();
@@ -498,11 +498,11 @@ class LinkController extends Controller
             $MinhaMarca = '<h2>-------------</h2><h2>Empregos Yoyota - Aqui voc&ecirc; encontra o seu emprego ideal.</h2><p>Encontre aqui as melhores vagas de emprego para 2023, oportunidades de recrutamento em Angola dispon&iacute;veis no nosso portal para candidaturas. Tamb&eacute;m informamos sobre concurso p&uacute;blico para 2023 e muito mais.<br /><strong>Tags:</strong>&nbsp;emprego em angola, concurso publico agt 2023, vagas de emprego em angola 2023, vagas de emprego em angola 2022, minsa, governo provincial, resultados, gpl, recrutamento 2023, 2024, 2022, concurso p&uacute;blico agt 2023</p><h2>N&atilde;o recrutamos ningu&eacute;m, a nossa miss&atilde;o &eacute; informar as vagas de emprego&nbsp;publicadas no Jornal de Angola e&nbsp;de outras fontes cred&iacute;veis.</h2><h2>Baixe modelos de curr&iacute;culos clicando no link&nbsp;<a href="https://ao.empregosyoyota.net/modelos-de-curriculos">https://ao.empregosyoyota.net/modelos-de-curriculos</a></h2>';
             $PostCompleto = '<p><span>Hoje, estamos empolgados em compartilhar as vagas de emprego do dia de hoje com voc&ecirc;. Se voc&ecirc; est&aacute; em busca de uma nova carreira, um desafio emocionante ou simplesmente quer expandir seus horizontes profissionais, confira nossas vagas do dia!</span></p><p><span>&nbsp;</span></p><p><strong><span>Observa&ccedil;&atilde;o 1:</span></strong><span> Todas as vagas s&atilde;o gratu&iacute;tas e n&atilde;o implicam qualquer custo.</span></p><p><strong><span>Observa&ccedil;&atilde;o 2:</span></strong><span> N&atilde;o recrutamos ningu&eacute;m, a nossa miss&atilde;o &eacute; informar as vagas de emprego publicadas no Jornal de Angola e de outras fontes cred&iacute;veis.</span></p>';
             $PostCompleto = $PostCompleto . $ListaHoje . $ListaOntem . $ListaAntesOntem . $MinhaMarca;
-            
+
 			$TituloPost = 'Confira agora as vagas do dia ' . Carbon::now()->format('d-m-Y');
-			
+
 			//$TituloPost = $this->TituloViaGemini();
-			
+
             $newRecord = Article::create([
                 'title' => $TituloPost,
                 'description' => $PostCompleto,
@@ -512,7 +512,7 @@ class LinkController extends Controller
 
             //Tratar Texto do Post para Facebook e Linkedin
             $PostTratado = $newRecord->title . "\n.\n" . $ListaParaFacebook . "\n.\nSe você deseja saber mais clique no link: https://empregosyoyota.net/articles/" . $newRecord->slug . "\n.";
-            
+
             //*********************Postar no Facebook*****************************************
             //Inicia novo Client
             $clientParaApi = new Client();
@@ -529,17 +529,17 @@ class LinkController extends Controller
             // Realize a solicitação POST
             $response = $clientParaApi->post($apiUrl, $params);
             //*********************************************************************************** */
-            
+
              /*AGORA VAMOS POSTAR NO LINKEDIN*/
         	$link = "https://empregosyoyota.net/articles/" . $newRecord->slug;
         	$linkImage = "https://empregosyoyota.net/storage/" . $newRecord->photo;
         	$this->PublicarLinkedIn2($PostTratado, $link, $linkImage);
-        	
+
         	//*******************************
 
         }
     }
-	
+
 	public function ObterDrafts()
 	{
 		// Crie uma instância do cliente Guzzle
@@ -590,7 +590,7 @@ class LinkController extends Controller
 			]);
 		}
 	}
-	
+
 	public function ObterAngolaEmpregoAngoEmprego($website = 'angoemprego.com')
 	{
 		// Crie uma instância do cliente Guzzle
@@ -605,7 +605,7 @@ class LinkController extends Controller
 		if ($response->getStatusCode() === 200) {
 			// Obtenha o conteúdo da resposta em formato JSON
 			$json = $response->getBody()->getContents();
-            
+
 			// Decodifique o JSON para um array ou objeto PHP
 			$data = json_decode($json);
 
@@ -613,7 +613,7 @@ class LinkController extends Controller
 				$Empregos = $data;
 			}
 		}
-		
+
 		foreach ($Empregos as $emprego) {
 
             // Verifica se o link já existe, se sim salte para a proxima iteração
@@ -666,22 +666,22 @@ class LinkController extends Controller
             //$IAImagem = $this->ImagemVagaViaGemini($emprego->meta->_company_name);
             $IAAplication = $emprego->meta->_application;
             $Empresa = $emprego->meta->_company_name;
-            
+
             if(!($website == 'angoemprego.com')){
 			    $TextoCandidatura = '';
 			    $IAAplication = $this->GetOnContent($descricaoTratada);
 			}
-			
+
 			if(($emprego->meta->_company_name == '') || ($emprego->meta->_company_name == null)){
 			    $Empresa = 'Empresa em Angola';
 			}
-			
+
             //Inserir emprego no site Angola Recruta
             $client = new Client();
 
 
             try{
-                
+
                 //Testes para o AngolaEmprego
                 $response2 = $client->request('POST', 'https://angolaemprego.com/api/job/create', ['verify' => false,
                     'json' => [
@@ -693,37 +693,37 @@ class LinkController extends Controller
                         'image' => 'images/jobs/default.png',
                     ]
                 ]);
-                
+
                 $dadosEmprego = json_decode($response2->getBody()->getContents(), true);
                 //echo($dadosEmprego['slug']);
-    
+
                 //Adicionar novo Registro na tabela Link
                 Link::create([
                     'url' => $emprego->link,
                     'country_id' => 1
                 ]);
 
-                
+
                 //Publicar no Linkedin e Facebook***********
                 $TextoEmprego = $this->DescricaoLimpa($descricaoTratada . $TextoCandidatura);
                 $TextoEmprego = $TextoEmprego . "\n.\n https://angolaemprego.com/vagas/" . $dadosEmprego['slug'];
                 $LinkEmprego = "https://angolaemprego.com/vagas/" . $dadosEmprego['slug'];
                 // Defina e codifique o texto
                 $text = $IATitle . "\n.\n" . $TextoEmprego . "\n.\nMais Vagas em: https://angolaemprego.com/vagas/";
-                
+
                 //Facebook
                 $this->PublicarFacebook2($IATitle . "\n.\n" . $TextoEmprego, $LinkEmprego, env('FACEBOOK_ACCESS_TOKEN_3'));
-                
+
                 //Linkedin
                 $this->PublicarLinkedIn2($text, "https://angolaemprego.com/vagas/", "https://angolaemprego.com/storage/images/jobs/default.png", "99975145");
-                
-            } 
+
+            }
             catch(Exception $ex){}
-            
+
 
 		}
 	}
-	
+
 	public function ObterEmpregosYoyotaAngoEmprego()
 	{
 		// Crie uma instância do cliente Guzzle
@@ -738,7 +738,7 @@ class LinkController extends Controller
 		if ($response->getStatusCode() === 200) {
 			// Obtenha o conteúdo da resposta em formato JSON
 			$json = $response->getBody()->getContents();
-            
+
 			// Decodifique o JSON para um array ou objeto PHP
 			$data = json_decode($json);
 
@@ -746,7 +746,7 @@ class LinkController extends Controller
 				$Empregos = $data;
 			}
 		}
-		
+
 		foreach ($Empregos as $emprego) {
 
             // Verifica se o link já existe, se sim salte para a proxima iteração
@@ -803,7 +803,7 @@ class LinkController extends Controller
 
 
             try{
-                
+
                 $response = $client->request('POST', 'https://ao.empregosyoyota.net/api/job/create', ['verify' => false,
                     'json' => [
                         'title' => $IATitle,
@@ -815,20 +815,20 @@ class LinkController extends Controller
                         'country_id' => 1,
                     ]
                 ]);
-    
+
                 //Adicionar novo Registro na tabela Link
                 Link::create([
                     'url' => $emprego->date,
                     'country_id' => 1
                 ]);
-                
-            } 
+
+            }
             catch(ex){}
-            
+
 
 		}
 	}
-	
+
 	public function PublicarFacebook()
     {
         $smj = SocialMediaJob::where('post_status', '=', 0)->get();
@@ -857,65 +857,65 @@ class LinkController extends Controller
                 // Parâmetros da solicitação POST
                 $params = [
                     'form_params' => [
-                        'message' => $job->title . "\n.\n". substr($NovaDescricao, 0, 120) ."...\n.\nLeia mais: https://ao.empregosyoyota.net/empregos/" . $job->slug . "\n.\n.\n.\n.\n.\n------------\nNosso Canal no WhatsApp: https://whatsapp.com/channel/0029VaCfSeo0bIdgKs7bIB3t\n.",
-                        'link' => 'https://ao.empregosyoyota.net/empregos/' . $job->slug,
+                        'message' => $job->title . "\n.\n". substr($NovaDescricao, 0, 120) ."...\n.\nLeia mais: https://empregosyoyota.net/empregos/" . $job->slug . "\n.\n.\n.\n.\n.\n------------\nNosso Canal no WhatsApp: https://whatsapp.com/channel/0029VaCfSeo0bIdgKs7bIB3t\n.",
+                        'link' => 'https://empregosyoyota.net/empregos/' . $job->slug,
                         'access_token' => env('FACEBOOK_ACCESS_TOKEN_2'),
                     ],
                 ];
                 // Realize a solicitação POST
                 $response = $clientParaApi->post($apiUrl, $params);
-				
-                //*********************************************************************************** */	
+
+                //*********************************************************************************** */
 			}
 
             $item->post_status = 1;
             $item->save();
-            
-            
+
+
             // Defina e codifique o texto
-            $text = $job->title . "\n.\n". substr($NovaDescricao, 0, 120) ."...\n.\nLeia mais: https://ao.empregosyoyota.net/empregos/" . $job->slug . "\n.\n.\n.\n.\n.\n------------\nNosso Canal no WhatsApp: https://whatsapp.com/channel/0029VaCfSeo0bIdgKs7bIB3t\n.";
+            $text = $job->title . "\n.\n". substr($NovaDescricao, 0, 120) ."...\n.\nLeia mais: https://empregosyoyota.net/empregos/" . $job->slug . "\n.\n.\n.\n.\n.\n------------\nNosso Canal no WhatsApp: https://whatsapp.com/channel/0029VaCfSeo0bIdgKs7bIB3t\n.";
             $text_encoded = urlencode($text);
-		
-		
+
+
 		    /*AGORA VAMOS POSTAR NO LINKEDIN*/
-        	$link = "https://ao.empregosyoyota.net/empregos/" . $job->slug;
-        	$linkImage = "https://ao.empregosyoyota.net/storage/" . $job->photo;
+        	$link = "https://empregosyoyota.net/empregos/" . $job->slug;
+        	$linkImage = "https://empregosyoyota.net/storage/" . $job->photo;
         	$this->PublicarLinkedIn2($text, $link, $linkImage);
-        	
+
         	//*******************************
-		
-		
-		
+
+
+
 			/*AGORA VAMOS POSTAR NO TELEGRAM*/
 			// Defina a URL base completa
             $base_url = env('TELEGRAM_BOT_URL');
-            
+
             // Construa a URL final
             $apiUrl = "{$base_url}&text={$text_encoded}";
         	$clientParaApi->request('GET', $apiUrl);
         	/*******************************/
-	
-    	
-    	
+
+
+
     	/*AGORA VAMOS CATEGORIZAR*/
-    	
+
     	$this->setCategories($job->id, $job->description);
-    	
+
     	/*******************************/
-    	
-    	
+
+
         }
     }
-    
+
     public function PublicarFacebook2(string $message, string $link, string $access_token)
     {
         try {
             // URL da API do Facebook
             $apiUrl = 'https://graph.facebook.com/v18.0/me/feed';
-    
+
             // Inicializa o cliente HTTP
             $client = new Client();
-    
+
             // Parâmetros para a requisição POST
             $params = [
                 'form_params' => [
@@ -924,13 +924,13 @@ class LinkController extends Controller
                     'access_token' => $access_token,
                 ],
             ];
-    
+
             // Envia a requisição para a API do Facebook
             $response = $client->post($apiUrl, $params);
-    
+
             // Retorna a resposta decodificada
             return json_decode($response->getBody()->getContents(), true);
-    
+
         } catch (\Exception $e) {
             // Em caso de erro, retorna a mensagem
             return [
@@ -939,7 +939,7 @@ class LinkController extends Controller
             ];
         }
     }
-        
+
     public function PublicarLinkedIn($post, $link)
     {
         // Variáveis definidas dentro do escopo da função
@@ -993,8 +993,8 @@ class LinkController extends Controller
             return response()->json(['error' => 'Erro ao fazer a postagem: ' . $e->getMessage()], 500);
         }
     }
-    
-    
+
+
 
 public function PublicarLinkedIn2($post, $link = null, $imagePath = null, $_pageId = '71657080')
 {
@@ -1107,14 +1107,14 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
     }
 }
 
-    
-    
+
+
     public function setCategories($Id, $Description)
     {
         //$dados = json_decode('[{"id":"' . $Id . '","description":"' . $Description . '"} ]', true);
 
         //$Description = $dados[0]['description'];
-        
+
         echo($Description);
 
         $Categories = $this->CategoriaViaGemini($Description);
@@ -1131,9 +1131,9 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
                 ]
             ]);
         }
-        
+
     }
-    
+
     public function DescricaoLimpa($Text)
     {
 		$NovaDescricao = str_replace("<br>", "\n<br>", $Text);
@@ -1145,10 +1145,10 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
 		$NovaDescricao = explode('----------', $NovaDescricao)[0];
 		$NovaDescricao = strip_tags($NovaDescricao);
 		$NovaDescricao = str_replace("&nbsp;", "", $NovaDescricao);
-		
+
 		return $NovaDescricao;
     }
-	
+
 	function TituloViaGemini(){
 
         $api_key = env('GOOGLE_API_KEY_1');
@@ -1206,12 +1206,12 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
         $responseBody = $response->getBody()->getContents();
         $jsonObject = json_decode($responseBody);
         $PegarJSON = json_decode($jsonObject->candidates[0]->content->parts[0]->text);
-        
+
         if(!isset($PegarJSON->title) || !isset($PegarJSON))
         {
             throw ValidationException::withMessages(['Title não existe']);
         }
-        
+
         try {
             return $PegarJSON->title;
         } catch (Exception $e) {
@@ -1220,7 +1220,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
         }
 
     }
-    
+
     function CategoriaViaGemini($Descricao){
 
         $api_key = env('GOOGLE_API_KEY_1');
@@ -1295,7 +1295,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
         }
 
     }
-    
+
     function DescricaoVagaViaGemini($Descricao){
 
         $api_key = env('GOOGLE_API_KEY_1');
@@ -1368,7 +1368,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
         }
 
     }
-    
+
     function TituloVagaViaGemini($TituloAntigo = 'Administrador'){
 
         $api_key = env('GOOGLE_API_KEY_1');
@@ -1513,7 +1513,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
         }
 
     }
-    
+
     function GetOnContent($Content){
 
         $api_key = env('GOOGLE_API_KEY_1');
@@ -1588,7 +1588,7 @@ private function uploadImageToLinkedIn($client, $accessToken, $pageId, $imagePat
         }
 
     }
-    
+
     function iniciarPagamento()
 {
     // ***** MUDE ESTE URL PARA O URL REAL DA SUA API NO CPANEL *****
