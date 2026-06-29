@@ -837,18 +837,30 @@ class LinkController extends Controller
 			$item = $smj[0];
             $job = Job::find($item->job_id);
 
+            while($job->country_id != 1)
+            {
+                $item->post_status = 1;
+                $item->save();
+                $item = SocialMediaJob::where('post_status', '=', 0)->first();
+                if($item == null)
+                {
+                    return response()->json(['message' => 'Nenhum emprego para publicar no Facebook.']);
+                }
+                $job = Job::find($item->job_id);
+            }
+
             if($job->country_id == 1)
             {
 				//*********************Postar no Facebook*****************************************
-			$NovaDescricao = str_replace("<br>", "\n<br>", $job->description);
-			$NovaDescricao = str_replace("</p>", "</p>\n", $NovaDescricao);
-			$NovaDescricao = str_replace("</h1>", "</h1>\n", $NovaDescricao);
-			$NovaDescricao = str_replace("</h2>", "</h2>\n", $NovaDescricao);
-			$NovaDescricao = str_replace("</h3>", "</h3>\n", $NovaDescricao);
-			$NovaDescricao = str_replace("</li>", "</li>\n", $NovaDescricao);
-			$NovaDescricao = explode('----------', $NovaDescricao)[0];
-			$NovaDescricao = strip_tags($NovaDescricao);
-			$NovaDescricao = str_replace("&nbsp;", "", $NovaDescricao);
+                $NovaDescricao = str_replace("<br>", "\n<br>", $job->description);
+                $NovaDescricao = str_replace("</p>", "</p>\n", $NovaDescricao);
+                $NovaDescricao = str_replace("</h1>", "</h1>\n", $NovaDescricao);
+                $NovaDescricao = str_replace("</h2>", "</h2>\n", $NovaDescricao);
+                $NovaDescricao = str_replace("</h3>", "</h3>\n", $NovaDescricao);
+                $NovaDescricao = str_replace("</li>", "</li>\n", $NovaDescricao);
+                $NovaDescricao = explode('----------', $NovaDescricao)[0];
+                $NovaDescricao = strip_tags($NovaDescricao);
+                $NovaDescricao = str_replace("&nbsp;", "", $NovaDescricao);
 
                 //Inicia novo Client
                 $clientParaApi = new Client();
@@ -867,6 +879,7 @@ class LinkController extends Controller
 
                 //*********************************************************************************** */
 			}
+
 
             $item->post_status = 1;
             $item->save();
