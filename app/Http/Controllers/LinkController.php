@@ -837,7 +837,7 @@ class LinkController extends Controller
 			$item = $smj[0];
             $job = Job::find($item->job_id);
 
-            while($job->country_id != 1)
+            while($job->country_id > 2)
             {
                 $item->post_status = 1;
                 $item->save();
@@ -849,18 +849,20 @@ class LinkController extends Controller
                 $job = Job::find($item->job_id);
             }
 
+            //Trata da Descricao para postar no Facebook********************************
+            $NovaDescricao = str_replace("<br>", "\n<br>", $job->description);
+            $NovaDescricao = str_replace("</p>", "</p>\n", $NovaDescricao);
+            $NovaDescricao = str_replace("</h1>", "</h1>\n", $NovaDescricao);
+            $NovaDescricao = str_replace("</h2>", "</h2>\n", $NovaDescricao);
+            $NovaDescricao = str_replace("</h3>", "</h3>\n", $NovaDescricao);
+            $NovaDescricao = str_replace("</li>", "</li>\n", $NovaDescricao);
+            $NovaDescricao = explode('----------', $NovaDescricao)[0];
+            $NovaDescricao = strip_tags($NovaDescricao);
+            $NovaDescricao = str_replace("&nbsp;", "", $NovaDescricao);
+
             if($job->country_id == 1)
             {
 				//*********************Postar no Facebook*****************************************
-                $NovaDescricao = str_replace("<br>", "\n<br>", $job->description);
-                $NovaDescricao = str_replace("</p>", "</p>\n", $NovaDescricao);
-                $NovaDescricao = str_replace("</h1>", "</h1>\n", $NovaDescricao);
-                $NovaDescricao = str_replace("</h2>", "</h2>\n", $NovaDescricao);
-                $NovaDescricao = str_replace("</h3>", "</h3>\n", $NovaDescricao);
-                $NovaDescricao = str_replace("</li>", "</li>\n", $NovaDescricao);
-                $NovaDescricao = explode('----------', $NovaDescricao)[0];
-                $NovaDescricao = strip_tags($NovaDescricao);
-                $NovaDescricao = str_replace("&nbsp;", "", $NovaDescricao);
 
                 //Inicia novo Client
                 $clientParaApi = new Client();
@@ -878,35 +880,56 @@ class LinkController extends Controller
                 $response = $clientParaApi->post($apiUrl, $params);
 
                 //*********************************************************************************** */
+
+                $item->post_status = 1;
+                $item->save();
+
+
+                // Defina e codifique o texto
+                $text = $job->title . "\n.\n". substr($NovaDescricao, 0, 120) ."...\n.\nLeia mais: https://empregosyoyota.net/empregos/" . $job->slug . "\n.\n.\n.\n.\n.\n------------\nNosso Canal no WhatsApp: https://whatsapp.com/channel/0029VaCfSeo0bIdgKs7bIB3t\n.";
+                $text_encoded = urlencode($text);
+
+
+                /*AGORA VAMOS POSTAR NO LINKEDIN*/
+                $link = "https://empregosyoyota.net/empregos/" . $job->slug;
+                $linkImage = "https://empregosyoyota.net/storage/" . $job->photo;
+                $this->PublicarLinkedIn2($text, $link, $linkImage);
+
+                //*******************************
+
+
+
+                /*AGORA VAMOS POSTAR NO TELEGRAM*/
+                // Defina a URL base completa
+                $base_url = env('TELEGRAM_BOT_URL');
+
+                // Construa a URL final
+                $apiUrl = "{$base_url}&text={$text_encoded}";
+                $clientParaApi->request('GET', $apiUrl);
+                /***********************************************************************************/
 			}
+            //******PARA O BRASIL IRÁ SOMENTE NO LINKEDIN */
+            else if ($job->country_id == 2)
+            {
+                $item->post_status = 1;
+                $item->save();
 
 
-            $item->post_status = 1;
-            $item->save();
+                // Defina e codifique o texto
+                $text = $job->title . "\n.\n". substr($NovaDescricao, 0, 120) ."...\n.\nLeia mais: https://empregosyoyota.net/empregos/" . $job->slug . "\n.";
+                $text_encoded = urlencode($text);
 
 
-            // Defina e codifique o texto
-            $text = $job->title . "\n.\n". substr($NovaDescricao, 0, 120) ."...\n.\nLeia mais: https://empregosyoyota.net/empregos/" . $job->slug . "\n.\n.\n.\n.\n.\n------------\nNosso Canal no WhatsApp: https://whatsapp.com/channel/0029VaCfSeo0bIdgKs7bIB3t\n.";
-            $text_encoded = urlencode($text);
+                /*AGORA VAMOS POSTAR NO LINKEDIN*/
+                $link = "https://empregosyoyota.net/empregos/" . $job->slug;
+                $linkImage = "https://empregosyoyota.net/storage/" . $job->photo;
+                $this->PublicarLinkedIn2($text, $link, $linkImage, '102139832');
 
-
-		    /*AGORA VAMOS POSTAR NO LINKEDIN*/
-        	$link = "https://empregosyoyota.net/empregos/" . $job->slug;
-        	$linkImage = "https://empregosyoyota.net/storage/" . $job->photo;
-        	$this->PublicarLinkedIn2($text, $link, $linkImage);
-
-        	//*******************************
+                //*******************************
+            }
 
 
 
-			/*AGORA VAMOS POSTAR NO TELEGRAM*/
-			// Defina a URL base completa
-            $base_url = env('TELEGRAM_BOT_URL');
-
-            // Construa a URL final
-            $apiUrl = "{$base_url}&text={$text_encoded}";
-        	$clientParaApi->request('GET', $apiUrl);
-        	/*******************************/
 
 
 
