@@ -916,7 +916,7 @@ class LinkController extends Controller
 
 
                 // Defina e codifique o texto
-                $text = $job->title . "\n.\n". substr($NovaDescricao, 0, 120) ."...\n.\nLeia mais: https://empregosyoyota.net/empregos/" . $job->slug . "\n.";
+                $text = $job->title . "\n.\n". substr($NovaDescricao, 0, 200) ."...\n.\nLeia mais: https://empregosyoyota.net/empregos/" . $job->slug . "\n.";
                 $text_encoded = urlencode($text);
 
 
