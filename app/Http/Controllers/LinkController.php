@@ -837,7 +837,7 @@ class LinkController extends Controller
 			$item = $smj[0];
             $job = Job::find($item->job_id);
 
-            while($job->country_id > 2 || $job->country_id <> 5)
+            while($job->country_id > 2 && $job->country_id <> 5)
             {
                 $item->post_status = 1;
                 $item->save();
