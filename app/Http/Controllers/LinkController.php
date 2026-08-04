@@ -837,7 +837,7 @@ class LinkController extends Controller
 			$item = $smj[0];
             $job = Job::find($item->job_id);
 
-            while($job->country_id > 2)
+            while($job->country_id > 2 || $job->country_id <> 5)
             {
                 $item->post_status = 1;
                 $item->save();
@@ -924,6 +924,26 @@ class LinkController extends Controller
                 $link = "https://empregosyoyota.net/empregos/" . $job->slug;
                 $linkImage = "https://empregosyoyota.net/storage/" . $job->photo;
                 $this->PublicarLinkedIn2($text, $link, $linkImage, '102139832');
+
+                //*******************************
+            }
+
+             //******PARA portugal IRÁ SOMENTE NO LINKEDIN */
+            else if ($job->country_id == 5)
+            {
+                $item->post_status = 1;
+                $item->save();
+
+
+                // Defina e codifique o texto
+                $text = $job->title . "\n.\n". substr($NovaDescricao, 0, 200) ."...\n.\nLeia mais: https://empregosyoyota.net/empregos/" . $job->slug . "\n.";
+                $text_encoded = urlencode($text);
+
+
+                /*AGORA VAMOS POSTAR NO LINKEDIN*/
+                $link = "https://empregosyoyota.net/empregos/" . $job->slug;
+                $linkImage = "https://empregosyoyota.net/storage/" . $job->photo;
+                $this->PublicarLinkedIn2($text, $link, $linkImage, '100562698');
 
                 //*******************************
             }
